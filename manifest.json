@@ -1,0 +1,49 @@
+{
+  "name": "শাপলা আর্ট",
+  "short_name": "শাপলা আর্ট",
+  "description": "শাপলা আর্ট — প্রিন্টিং বিজনেস ম্যানেজমেন্ট অ্যাপ",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#6366f1",
+  "theme_color": "#6366f1",
+  "lang": "bn",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "finance", "productivity"],
+  "shortcuts": [
+    {
+      "name": "নতুন মেমো",
+      "short_name": "মেমো",
+      "description": "দ্রুত নতুন আয় এন্ট্রি",
+      "url": "./index.html#income",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "বকেয়া দেখুন",
+      "short_name": "বকেয়া",
+      "description": "বকেয়া ট্র্যাকার",
+      "url": "./index.html#due",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "দৈনিক রিপোর্ট",
+      "short_name": "দৈনিক",
+      "description": "আজকের দৈনিক রিপোর্ট",
+      "url": "./index.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

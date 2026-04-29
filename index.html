@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>স্মার্ট হিসাব — যেকোনো ব্যবসার ডিজিটাল হিসাব</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --g1:#6366f1;--g2:#8b5cf6;--g3:#ec4899;--g4:#f97316;
+  --green:#10b981;--amber:#f59e0b;
+  --dark:#09090f;--dark2:#0f0e1d;--card:#13121f;--card2:#1a192e;
+  --border:rgba(99,102,241,.2);--border2:rgba(255,255,255,.07);
+  --text:#e4e3f5;--muted:#7c7a9e;
+  --ff:    'Hind Siliguri',sans-serif;
+  --ff-en: 'Plus Jakarta Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff);background:var(--dark);color:var(--text);overflow-x:hidden;line-height:1.7}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--dark)}
+::-webkit-scrollbar-thumb{background:var(--g1);border-radius:99px}
+
+/* ─── GRID BG ─── */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(99,102,241,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(99,102,241,.04) 1px,transparent 1px);
+  background-size:50px 50px;
+  pointer-events:none;z-index:0;
+}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:66px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(16px,5%,80px);
+  background:rgba(9,9,15,.8);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border2);
+  transition:background .3s;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;color:#fff;
+  font-family:var(--ff-en);font-weight:800;font-size:18px;
+}
+.logo-mark{
+  width:34px;height:34px;border-radius:9px;
+  background:linear-gradient(135deg,var(--g1),var(--g3));
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;
+  box-shadow:0 0 18px rgba(99,102,241,.5);
+}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;transition:color .2s}
+.nav-links a:hover{color:#fff}
+.nav-pill{
+  background:linear-gradient(135deg,var(--g1),var(--g2));
+  color:#fff !important;padding:9px 20px;border-radius:30px;
+  font-size:13px !important;font-weight:700 !important;
+  box-shadow:0 4px 16px rgba(99,102,241,.4);
+  transition:all .2s !important;
+}
+.nav-pill:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(99,102,241,.6) !important}
+.nav-login{
+  border:1.5px solid rgba(255,255,255,.2) !important;
+  padding:8px 18px;border-radius:30px;
+  font-size:13px !important;font-weight:700 !important;
+  color:#fff !important;transition:all .2s !important;
+}
+.nav-login:hover{border-color:rgba(255,255,255,.5) !important;background:rgba(255,255,255,.07) !important;transform:translateY(-2px)}
+.ham{display:none;background:none;border:none;color:#fff;font-size:20px;cursor:pointer}
+#mob-menu{
+  display:none;position:fixed;top:66px;left:0;right:0;
+  background:rgba(9,9,15,.97);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);z-index:199;padding:16px 20px 24px;
+}
+#mob-menu a{display:block;padding:13px 0;color:var(--muted);text-decoration:none;font-weight:600;border-bottom:1px solid var(--border2)}
+#mob-menu .mob-cta{
+  display:block;margin-top:16px;padding:14px;text-align:center;
+  background:linear-gradient(135deg,var(--g1),var(--g2));
+  color:#fff;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px;
+}
+#mob-menu .mob-login{
+  display:block;margin-top:16px;padding:14px;text-align:center;
+  border:1.5px solid rgba(255,255,255,.2);
+  color:#fff !important;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px;
+}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:110px 5% 80px;position:relative;overflow:hidden;
+}
+.orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
+.orb-1{width:700px;height:700px;background:rgba(99,102,241,.18);top:-200px;left:-200px}
+.orb-2{width:600px;height:600px;background:rgba(236,72,153,.14);bottom:-150px;right:-150px}
+.orb-3{width:350px;height:350px;background:rgba(249,115,22,.12);top:40%;left:55%}
+
+.hero-inner{position:relative;z-index:1;width:100%;max-width:1100px;margin:0 auto}
+
+.pill-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.35);
+  padding:7px 18px;border-radius:30px;
+  font-size:12px;font-weight:700;color:#a5b4fc;
+  margin-bottom:28px;text-transform:uppercase;letter-spacing:.8px;
+}
+.live-dot{
+  width:7px;height:7px;background:var(--green);border-radius:50%;
+  animation:ldot 1.4s infinite;
+}
+@keyframes ldot{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.7)}50%{box-shadow:0 0 0 6px rgba(16,185,129,0)}}
+
+.hero h1{
+  font-size:clamp(38px,6.5vw,78px);font-weight:700;line-height:1.1;
+  margin-bottom:24px;
+  animation:upIn .7s ease both;
+}
+.h1-plain{color:#fff}
+.h1-grad{
+  background:linear-gradient(135deg,#a5b4fc 0%,#ec4899 50%,#f97316 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-desc{
+  font-size:clamp(15px,2vw,19px);color:var(--muted);
+  max-width:580px;margin:0 auto 40px;line-height:1.9;
+  animation:upIn .7s .12s ease both;
+}
+.hero-btns{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:60px;
+  animation:upIn .7s .22s ease both;
+}
+.btn-main{
+  padding:16px 36px;
+  background:linear-gradient(135deg,var(--g1),var(--g2));
+  color:#fff;border:none;border-radius:50px;
+  font-size:15px;font-weight:700;font-family:var(--ff);
+  cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 8px 28px rgba(99,102,241,.5);
+  transition:all .25s;
+}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(99,102,241,.65)}
+.btn-out{
+  padding:16px 36px;
+  background:transparent;color:#fff;
+  border:1.5px solid rgba(255,255,255,.2);
+  border-radius:50px;font-size:15px;font-weight:700;
+  font-family:var(--ff);cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:all .25s;
+}
+.btn-out:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.4);transform:translateY(-3px)}
+
+/* ─── BIZ TYPE TICKER ─── */
+.biz-ticker{
+  margin-bottom:50px;
+  animation:upIn .7s .3s ease both;
+}
+.biz-ticker-label{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:14px;letter-spacing:.5px;text-transform:uppercase}
+.ticker-track{
+  display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
+}
+.biz-chip{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 16px;border-radius:30px;
+  font-size:13px;font-weight:600;
+  border:1px solid var(--border2);
+  background:var(--card);
+  color:var(--text);
+  transition:all .25s;
+  cursor:default;
+  animation:upIn .5s ease both;
+}
+.biz-chip i{font-size:12px;opacity:.8}
+.biz-chip:hover{border-color:rgba(99,102,241,.5);background:var(--card2);transform:translateY(-2px)}
+.biz-chip.active{border-color:var(--g1);background:rgba(99,102,241,.15);color:#a5b4fc}
+
+/* ─── DASHBOARD MOCKUP ─── */
+.dash-mockup{
+  max-width:920px;margin:0 auto;
+  animation:upIn .8s .35s ease both;
+}
+.dash-frame{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:14px;
+  box-shadow:0 40px 100px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.06);
+}
+.dash-topbar{
+  display:flex;align-items:center;gap:8px;margin-bottom:14px;
+}
+.d-dot{width:9px;height:9px;border-radius:50%}
+.d-url{
+  flex:1;background:rgba(255,255,255,.06);border-radius:5px;height:22px;
+  display:flex;align-items:center;padding:0 10px;
+  font-size:10px;color:var(--muted);font-family:var(--ff-en);
+}
+.d-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
+.d-sc{border-radius:10px;padding:12px 10px;color:#fff}
+.d-sc small{font-size:9px;opacity:.75;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:3px}
+.d-sc strong{font-size:16px;font-weight:700;display:block}
+.d-charts{display:grid;grid-template-columns:3fr 2fr;gap:10px}
+.d-chart-box{
+  background:rgba(255,255,255,.03);border:1px solid var(--border2);
+  border-radius:10px;padding:12px;
+}
+.d-bars{display:flex;align-items:flex-end;gap:4px;height:60px;margin-top:8px}
+.d-bar{flex:1;border-radius:3px 3px 0 0;animation:gBar 1s ease both;transform-origin:bottom}
+@keyframes gBar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.d-list-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:10px;
+}
+.d-list-row:last-child{border:none}
+
+@keyframes upIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+
+
+/* ─── SECTIONS ─── */
+.section{padding:96px clamp(16px,5%,80px);position:relative;z-index:1}
+.s-tag{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--g1);margin-bottom:14px;
+}
+.s-tag::before{content:'';width:20px;height:2px;background:currentColor;border-radius:2px}
+.s-title{font-size:clamp(26px,4vw,44px);font-weight:700;line-height:1.2;margin-bottom:14px;color:#fff}
+.s-sub{font-size:15px;color:var(--muted);line-height:1.9;max-width:520px}
+.tc .s-tag{justify-content:center}
+.tc .s-tag::before{display:none}
+.tc .s-sub{margin:0 auto}
+
+/* ─── FEATURES ─── */
+.feat-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:16px;margin-top:56px;
+}
+.fc{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:18px;padding:28px 26px;
+  transition:all .3s;position:relative;overflow:hidden;
+  text-align:center;
+}
+.fc::after{
+  content:'';position:absolute;inset:0;opacity:0;
+  background:radial-gradient(circle at 50% 0%,rgba(99,102,241,.1),transparent 70%);
+  transition:opacity .3s;
+}
+.fc:hover{transform:translateY(-5px);border-color:rgba(99,102,241,.4);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.fc:hover::after{opacity:1}
+.fc-icon{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;margin-bottom:18px;position:relative;z-index:1;
+  margin-left:auto;margin-right:auto;
+}
+.fc h3{font-size:17px;font-weight:700;color:#fff;margin-bottom:8px;position:relative;z-index:1}
+.fc p{font-size:13px;color:var(--muted);line-height:1.8;position:relative;z-index:1}
+
+/* ─── BIZ TYPE SHOWCASE ─── */
+.showcase{
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;
+  align-items:center;margin-top:60px;
+}
+.biz-list{display:flex;flex-direction:column;gap:10px;margin-top:28px}
+.biz-row{
+  display:flex;align-items:center;gap:14px;
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:14px;padding:14px 18px;cursor:pointer;
+  transition:all .25s;
+}
+.biz-row:hover,.biz-row.sel{border-color:rgba(99,102,241,.5);background:var(--card2)}
+.biz-row.sel{border-color:var(--g1)}
+.biz-ico{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  flex-shrink:0;
+}
+.biz-info h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.biz-info p{font-size:12px;color:var(--muted)}
+.biz-check{margin-left:auto;color:var(--g1);font-size:14px;opacity:0;transition:opacity .2s}
+.biz-row.sel .biz-check{opacity:1}
+
+.showcase-right{position:relative}
+.showcase-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:24px;
+  transition:all .4s;
+}
+.sc-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.sc-logo{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.sc-stats-mini{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:18px}
+.sc-stat{
+  background:rgba(255,255,255,.04);border:1px solid var(--border2);
+  border-radius:10px;padding:10px;text-align:center;
+}
+.sc-stat-val{font-size:15px;font-weight:800;color:#fff}
+.sc-stat-lbl{font-size:10px;color:var(--muted);margin-top:2px}
+.sc-entries{display:flex;flex-direction:column;gap:6px}
+.sc-entry{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.03);border-radius:8px;padding:8px 10px;
+  font-size:12px;
+}
+.sc-entry-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* ─── HOW IT WORKS ─── */
+.steps-row{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:0;margin-top:56px;position:relative;
+}
+.steps-row::before{
+  content:'';position:absolute;top:30px;left:12%;right:12%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border),transparent);
+  z-index:0;
+}
+.step{
+  text-align:center;padding:0 20px;
+  transition:all .3s;position:relative;z-index:1;
+}
+.step:hover{transform:translateY(-6px)}
+.step-circle{
+  width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--g1),var(--g2));
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+  font-size:20px;font-weight:800;color:#fff;font-family:var(--ff-en);
+  box-shadow:0 8px 24px rgba(99,102,241,.4);
+}
+.step h3{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
+.step p{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ─── PRICING ─── */
+.pricing-wrap{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;max-width:1100px;margin:56px auto 0;
+}
+.pc{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:22px;padding:32px 28px;
+  position:relative;overflow:hidden;transition:all .3s;
+}
+.pc:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.pc.hot{border-color:rgba(99,102,241,.5);background:linear-gradient(160deg,rgba(99,102,241,.12),rgba(139,92,246,.06))}
+.hot-badge{
+  position:absolute;top:18px;right:18px;
+  background:linear-gradient(135deg,var(--g1),var(--g2));
+  color:#fff;font-size:10px;font-weight:800;
+  padding:4px 11px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;
+}
+.pc-plan{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--g1);margin-bottom:10px}
+.pc-price{font-size:50px;font-weight:800;color:#fff;font-family:var(--ff-en);line-height:1}
+.pc-price sup{font-size:22px;vertical-align:top;margin-top:8px;display:inline-block}
+.pc-period{font-size:13px;color:var(--muted);margin-bottom:24px}
+.pc-list{list-style:none;margin-bottom:28px}
+.pc-list li{
+  display:flex;align-items:flex-start;gap:9px;
+  font-size:13px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.045);
+}
+.pc-list li:last-child{border:none}
+.pc-list li i{color:var(--green);font-size:12px;margin-top:3px;flex-shrink:0}
+.pbtn{
+  width:100%;padding:13px;border:none;border-radius:12px;
+  font-family:var(--ff);font-size:14px;font-weight:700;cursor:pointer;transition:all .25s;
+}
+.pbtn-o{background:transparent;color:#fff;border:1.5px solid var(--border)}
+.pbtn-o:hover{border-color:var(--g1);background:rgba(99,102,241,.08)}
+.pbtn-g{background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;box-shadow:0 8px 22px rgba(99,102,241,.4)}
+.pbtn-g:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(99,102,241,.6)}
+.pbtn-y{background:linear-gradient(135deg,#f97316,#eab308);color:#fff;box-shadow:0 8px 22px rgba(249,115,22,.4)}
+.pbtn-y:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(249,115,22,.6)}
+
+/* yearly card */
+.pc.yearly{border-color:rgba(249,115,22,.45);background:linear-gradient(160deg,rgba(249,115,22,.1),rgba(234,179,8,.06))}
+.yearly-badge{
+  position:absolute;top:18px;right:18px;
+  background:linear-gradient(135deg,#f97316,#eab308);
+  color:#fff;font-size:10px;font-weight:800;
+  padding:4px 11px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;
+  display:flex;align-items:center;gap:5px;
+}
+.savings-row{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);
+  border-radius:10px;padding:9px 12px;
+  font-size:12px;color:#fdba74;margin-bottom:18px;
+}
+.savings-row i{color:#f97316;flex-shrink:0}
+.savings-row strong{color:#fff}
+
+/* ─── PAY INFO ─── */
+.pay-box{
+  max-width:540px;margin:28px auto 0;
+  background:var(--card2);border:1px solid var(--border2);
+  border-radius:18px;padding:24px 28px;text-align:center;
+}
+.pay-box h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:10px}
+.pay-box p{font-size:13px;color:var(--muted);line-height:2}
+.wa-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:16px;background:#25D366;color:#fff;
+  padding:10px 24px;border-radius:30px;
+  text-decoration:none;font-size:13px;font-weight:700;
+  transition:all .2s;
+}
+.wa-btn:hover{transform:scale(1.04);box-shadow:0 6px 20px rgba(37,211,102,.4)}
+
+/* ─── TESTIMONIALS ─── */
+.testi-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;margin-top:56px;
+}
+.testi{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:18px;padding:26px;transition:all .3s;
+}
+.testi:hover{border-color:rgba(99,102,241,.35);transform:translateY(-4px)}
+.t-stars{color:#fbbf24;font-size:12px;letter-spacing:2px;margin-bottom:12px}
+.t-quote{font-size:13px;color:var(--text);line-height:1.9;margin-bottom:18px;font-style:italic}
+.t-who{display:flex;align-items:center;gap:10px}
+.t-av{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;color:#fff;flex-shrink:0;
+}
+.t-name{font-size:13px;font-weight:700;color:#fff}
+.t-biz{font-size:11px;color:var(--muted)}
+
+/* ─── CTA ─── */
+.cta-wrap{
+  padding:96px clamp(16px,5%,80px);
+  position:relative;z-index:1;
+}
+.cta-inner{
+  background:linear-gradient(135deg,rgba(99,102,241,.18),rgba(139,92,246,.12));
+  border:1px solid rgba(99,102,241,.35);
+  border-radius:28px;padding:72px 40px;
+  text-align:center;max-width:680px;margin:0 auto;
+  position:relative;overflow:hidden;
+}
+.cta-inner::before{
+  content:'';position:absolute;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(99,102,241,.25),transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+.cta-icon-wrap{
+  width:72px;height:72px;border-radius:20px;
+  background:linear-gradient(135deg,var(--g1),var(--g3));
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 22px;font-size:28px;color:#fff;
+  box-shadow:0 12px 32px rgba(99,102,241,.5);
+  position:relative;z-index:1;
+}
+.cta-inner h2{font-size:clamp(26px,4vw,42px);font-weight:700;margin-bottom:14px;color:#fff;position:relative;z-index:1}
+.cta-inner p{font-size:15px;color:var(--muted);margin-bottom:32px;line-height:1.9;max-width:440px;margin-left:auto;margin-right:auto;position:relative;z-index:1}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.cta-note{margin-top:18px;font-size:12px;color:var(--muted);position:relative;z-index:1}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--dark2);border-top:1px solid var(--border2);
+  padding:60px clamp(16px,5%,80px) 28px;
+  position:relative;z-index:1;
+}
+.foot-grid{
+  display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;
+  gap:40px;margin-bottom:44px;
+}
+.foot-brand p{font-size:13px;color:var(--muted);line-height:1.9;margin-top:12px;max-width:280px}
+.foot-col h5{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:14px}
+.foot-col a{display:block;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:9px;transition:color .2s}
+.foot-col a:hover{color:#fff}
+.foot-bottom{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  padding-top:22px;border-top:1px solid var(--border2);
+  font-size:12px;color:var(--muted);
+}
+.socials{display:flex;gap:10px}
+.socials a{
+  width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.05);
+  border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;
+  color:var(--muted);text-decoration:none;font-size:12px;transition:all .2s;
+}
+.socials a:hover{background:var(--g1);border-color:var(--g1);color:#fff}
+
+/* ─── FLOATING CTA ─── */
+.float-cta{
+  position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+  background:rgba(9,9,15,.95);backdrop-filter:blur(20px);
+  border:1px solid rgba(99,102,241,.4);border-radius:50px;
+  padding:8px 8px 8px 18px;
+  display:flex;align-items:center;gap:10px;
+  z-index:300;font-size:12px;
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+  animation:ftUp .6s 1.6s ease both;
+  white-space:nowrap;
+  max-width:calc(100vw - 24px);
+}
+@keyframes ftUp{from{transform:translateX(-50%) translateY(80px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}
+.float-cta strong{color:#a5b4fc}
+.ft-btn{
+  background:linear-gradient(135deg,var(--g1),var(--g3));
+  color:#fff;border:none;border-radius:30px;
+  padding:8px 16px;font-size:11px;font-weight:700;
+  cursor:pointer;font-family:var(--ff);transition:all .2s;white-space:nowrap;flex-shrink:0;
+}
+.ft-btn:hover{transform:scale(1.04)}
+.ft-x{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:0 4px;transition:color .2s}
+.ft-x:hover{color:#fff}
+
+/* ─── SCROLL REVEAL ─── */
+.rev{opacity:0;transform:translateY(24px);transition:all .65s cubic-bezier(.2,1,.4,1)}
+.rev.in{opacity:1;transform:translateY(0)}
+
+/* ─── UTILS ─── */
+.grad{
+  background:linear-gradient(135deg,#a5b4fc,var(--g3),var(--g4));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.gb{
+  background:linear-gradient(135deg,var(--g1),var(--g3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+  .showcase{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .d-stats{grid-template-columns:repeat(3,1fr)}
+  .steps-row::before{display:none}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .ham{display:block}
+  .d-charts{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .trust{flex-direction:column}
+  .trust-item{border-right:none;border-bottom:1px solid var(--border2);width:100%;justify-content:center}
+  .trust-item:last-child{border:none}
+  .cta-inner{padding:48px 24px}
+  .float-cta{
+    font-size:11px;
+    padding:7px 7px 7px 14px;
+    gap:8px;
+    bottom:12px;
+  }
+  .ft-btn{padding:7px 13px;font-size:10px}
+}
+@media(max-width:480px){
+  .hero-btns{flex-direction:column;align-items:center}
+  .btn-main,.btn-out{width:100%;max-width:300px;justify-content:center}
+  .d-stats{grid-template-columns:1fr 1fr}
+  .float-cta span .fa-gift{display:none}
+  .pricing-wrap{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="logo-mark"><i class="fa-solid fa-calculator"></i></div>
+    স্মার্ট হিসাব
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">ফিচার</a></li>
+    <li><a href="#biz-types">ব্যবসার ধরন</a></li>
+    <li><a href="#how">কীভাবে কাজ করে</a></li>
+    <li><a href="#pricing">মূল্য</a></li>
+    <li><a href="auth.html" class="nav-login">লগইন</a></li>
+    <li><a href="auth.html" class="nav-pill">রেজিস্ট্রেশন →</a></li>
+  </ul>
+  <button class="ham" onclick="toggleNav()"><i class="fa-solid fa-bars" id="h-ico"></i></button>
+</nav>
+<div id="mob-menu">
+  <a href="#features" onclick="closeNav()">ফিচার</a>
+  <a href="#biz-types" onclick="closeNav()">ব্যবসার ধরন</a>
+  <a href="#how" onclick="closeNav()">কীভাবে কাজ করে</a>
+  <a href="#pricing" onclick="closeNav()">মূল্য</a>
+  <a href="auth.html" class="mob-login">লগইন</a>
+  <a href="auth.html" class="mob-cta">রেজিস্ট্রেশন →</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="hero-inner">
+
+    <div class="pill-badge">
+      <span class="live-dot"></span>
+      যেকোনো ব্যবসার জন্য উপযুক্ত
+    </div>
+
+    <h1>
+      <span class="h1-plain">আপনার ব্যবসার</span><br>
+      <span class="h1-grad">সম্পূর্ণ হিসাব এক জায়গায়</span>
+    </h1>
+
+    <p class="hero-desc">
+      দোকান, ফার্মেসি, রেস্টুরেন্ট, ইলেকট্রনিক্স — যেই ব্যবসাই হোক। আয়-ব্যয়, কাস্টমার, স্টক, বকেয়া — সব পরিচালনা করুন একটি শক্তিশালী অ্যাপ দিয়ে।
+    </p>
+
+    <div class="hero-btns">
+      <a href="auth.html" class="btn-main">
+        <i class="fa-solid fa-rocket"></i>
+        ১৪ দিন বিনামূল্যে ব্যবহার করুন
+      </a>
+      <a href="#biz-types" class="btn-out">
+        <i class="fa-solid fa-th-large"></i>
+        আপনার ব্যবসা খুঁজুন
+      </a>
+    </div>
+
+    <!-- Business type chips -->
+    <div class="biz-ticker">
+      <div class="biz-ticker-label">যে ব্যবসাগুলোর জন্য তৈরি</div>
+      <div class="ticker-track">
+        <span class="biz-chip active"><i class="fa-solid fa-print"></i> প্রিন্টিং প্রেস</span>
+        <span class="biz-chip"><i class="fa-solid fa-pills"></i> ফার্মেসি</span>
+        <span class="biz-chip"><i class="fa-solid fa-mobile-screen"></i> ইলেকট্রনিক্স</span>
+        <span class="biz-chip"><i class="fa-solid fa-shirt"></i> কাপড়ের দোকান</span>
+        <span class="biz-chip"><i class="fa-solid fa-utensils"></i> রেস্টুরেন্ট</span>
+        <span class="biz-chip"><i class="fa-solid fa-cart-shopping"></i> মুদির দোকান</span>
+        <span class="biz-chip"><i class="fa-solid fa-hammer"></i> হার্ডওয়্যার</span>
+        <span class="biz-chip"><i class="fa-solid fa-scissors"></i> সেলুন</span>
+        <span class="biz-chip"><i class="fa-solid fa-boxes-stacked"></i> পাইকারি</span>
+        <span class="biz-chip"><i class="fa-solid fa-screwdriver-wrench"></i> সার্ভিস সেন্টার</span>
+      </div>
+    </div>
+
+    <!-- Dashboard mockup -->
+    <div class="dash-mockup">
+      <div class="dash-frame">
+        <div class="dash-topbar">
+          <div class="d-dot" style="background:#ef4444"></div>
+          <div class="d-dot" style="background:#eab308"></div>
+          <div class="d-dot" style="background:#22c55e"></div>
+          <div class="d-url">
+            <i class="fa-solid fa-lock" style="color:#22c55e;margin-right:5px;font-size:8px"></i>
+            smarthisab.app — ড্যাশবোর্ড (আপনার ব্যবসার নাম)
+          </div>
+        </div>
+        <div class="d-stats">
+          <div class="d-sc" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
+            <small>মোট বিক্রয়</small><strong>৳৮৪,৫৬০</strong>
+          </div>
+          <div class="d-sc" style="background:linear-gradient(135deg,#059669,#10b981)">
+            <small>নগদ আদায়</small><strong>৳৬৭,২০০</strong>
+          </div>
+          <div class="d-sc" style="background:linear-gradient(135deg,#dc2626,#f87171)">
+            <small>বকেয়া</small><strong>৳১৭,৩৬০</strong>
+          </div>
+          <div class="d-sc" style="background:linear-gradient(135deg,#d97706,#fbbf24)">
+            <small>মোট ব্যয়</small><strong>৳২৮,৪০০</strong>
+          </div>
+          <div class="d-sc" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8)">
+            <small>নিট লাভ</small><strong>৳৩৮,৮০০</strong>
+          </div>
+        </div>
+        <div class="d-charts">
+          <div class="d-chart-box">
+            <div style="font-size:10px;color:var(--muted);font-weight:700;margin-bottom:4px">মাসিক আয় বনাম ব্যয়</div>
+            <div class="d-bars">
+              <div class="d-bar" style="height:45%;background:linear-gradient(0deg,#6366f1,#8b5cf6);animation-delay:.05s"></div>
+              <div class="d-bar" style="height:30%;background:rgba(236,72,153,.6);animation-delay:.1s"></div>
+              <div class="d-bar" style="height:65%;background:linear-gradient(0deg,#6366f1,#8b5cf6);animation-delay:.15s"></div>
+              <div class="d-bar" style="height:35%;background:rgba(236,72,153,.6);animation-delay:.2s"></div>
+              <div class="d-bar" style="height:80%;background:linear-gradient(0deg,#6366f1,#8b5cf6);animation-delay:.25s"></div>
+              <div class="d-bar" style="height:40%;background:rgba(236,72,153,.6);animation-delay:.3s"></div>
+              <div class="d-bar" style="height:95%;background:linear-gradient(0deg,#ec4899,#f97316);animation-delay:.35s"></div>
+              <div class="d-bar" style="height:45%;background:rgba(236,72,153,.6);animation-delay:.4s"></div>
+            </div>
+          </div>
+          <div class="d-chart-box">
+            <div style="font-size:10px;color:var(--muted);font-weight:700;margin-bottom:8px">সাম্প্রতিক লেনদেন</div>
+            <div class="d-list-row">
+              <span>রহিম স্টোর্স</span>
+              <span style="color:#10b981;font-size:9px;font-weight:700">✓ Paid</span>
+            </div>
+            <div class="d-list-row">
+              <span>করিম এন্টারপ্রাইজ</span>
+              <span style="color:#f59e0b;font-size:9px;font-weight:700">◑ Partial</span>
+            </div>
+            <div class="d-list-row">
+              <span>নাজমা ট্রেডার্স</span>
+              <span style="color:#ef4444;font-size:9px;font-weight:700">✗ Due</span>
+            </div>
+            <div class="d-list-row">
+              <span>আল-আমিন ব্রাদার্স</span>
+              <span style="color:#10b981;font-size:9px;font-weight:700">✓ Paid</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- ══ FEATURES ══ -->
+<section class="section" id="features">
+  <div class="tc rev">
+    <div class="s-tag">সব ফিচার</div>
+    <h2 class="s-title">একটি অ্যাপেই সব কিছু</h2>
+    <p class="s-sub">ছোট থেকে মাঝারি যেকোনো ব্যবসার দৈনন্দিন পরিচালনার জন্য যা যা দরকার সব এক জায়গায়।</p>
+  </div>
+  <div class="feat-grid">
+
+    <div class="fc rev">
+      <div class="fc-icon" style="background:rgba(99,102,241,.15)"><i class="fa-solid fa-coins" style="color:#a5b4fc"></i></div>
+      <h3>আয়-ব্যয় হিসাব</h3>
+      <p>প্রতিটি লেনদেন রেকর্ড করুন। মোট বিল, অগ্রিম, বকেয়া স্বয়ংক্রিয়ভাবে হিসাব হয়। Paid / Partial / Due স্ট্যাটাস।</p>
+    </div>
+
+    <div class="fc rev" style="transition-delay:.07s">
+      <div class="fc-icon" style="background:rgba(16,185,129,.12)"><i class="fa-solid fa-users" style="color:#6ee7b7"></i></div>
+      <h3>কাস্টমার / ক্রেতা ম্যানেজমেন্ট</h3>
+      <p>প্রতিটি কাস্টমারের সম্পূর্ণ লেনদেন ইতিহাস, বকেয়া ব্যালেন্স ও প্রোফাইল এক জায়গায়।</p>
+    </div>
+
+    <div class="fc rev" style="transition-delay:.14s">
+      <div class="fc-icon" style="background:rgba(37,211,102,.1)"><i class="fa-brands fa-whatsapp" style="color:#4ade80"></i></div>
+      <h3>WhatsApp বিল ও রিমাইন্ডার</h3>
+      <p>এক ক্লিকেই কাস্টমারের মোবাইলে বিল পাঠান। বকেয়া রিমাইন্ডার ও অফার ব্রডকাস্ট করুন সহজেই।</p>
+    </div>
+
+    <div class="fc rev" style="transition-delay:.21s">
+      <div class="fc-icon" style="background:rgba(14,165,233,.12)"><i class="fa-solid fa-boxes-stacked" style="color:#7dd3fc"></i></div>
+      <h3>স্টক / ইনভেন্টরি ট্র্যাকিং</h3>
+      <p>পণ্য কেনা ও বিক্রির রেকর্ড রাখুন। স্টক কম হলে স্বয়ংক্রিয় Low Stock সতর্কতা পান।</p>
+    </div>
+
+    <div class="fc rev" style="transition-delay:.28s">
+      <div class="fc-icon" style="background:rgba(245,158,11,.12)"><i class="fa-solid fa-chart-bar" style="color:#fde68a"></i></div>
+      <h3>দৈনিক / মাসিক / বার্ষিক রিপোর্ট</h3>
+      <p>চার্ট ও টেবিল সহ বিস্তারিত রিপোর্ট। প্রিন্ট করুন এক বাটনেই। শীর্ষ কাস্টমার র‍্যাংকিং দেখুন।</p>
+    </div>
+
+    <div class="fc rev" style="transition-delay:.35s">
+      <div class="fc-icon" style="background:rgba(124,58,237,.15)"><i class="fa-solid fa-hand-holding-dollar" style="color:#c4b5fd"></i></div>
+      <h3>কমিশন / এজেন্ট ট্র্যাকার</h3>
+      <p>দালাল, এজেন্ট বা রেফারেলদের কমিশন হিসাব রাখুন। বকেয়া ও পরিশোধের ইতিহাস ট্র্যাক করুন।</p>
+    </div>
+
+    <div class="fc rev" style="transition-delay:.42s">
+      <div class="fc-icon" style="background:rgba(236,72,153,.12)"><i class="fa-solid fa-receipt" style="color:#f9a8d4"></i></div>
+      <h3>ডিজিটাল মেমো ও ইনভয়েস</h3>
+      <p>আপনার লোগো ও ব্র্যান্ড নাম সহ প্রফেশনাল ইনভয়েস তৈরি করুন। এক ক্লিকে প্রিন্ট।</p>
+    </div>
+
+    <div class="fc rev" style="transition-delay:.49s">
+      <div class="fc-icon" style="background:rgba(249,115,22,.12)"><i class="fa-solid fa-cloud-arrow-up" style="color:#fdba74"></i></div>
+      <h3>ক্লাউড ব্যাকআপ ও অফলাইন মোড</h3>
+      <p>Firebase Firestore-এ রিয়েল-টাইম সিঙ্ক। নেট না থাকলেও কাজ চলে, পরে অটো আপলোড।</p>
+    </div>
+
+    <div class="fc rev" style="transition-delay:.56s">
+      <div class="fc-icon" style="background:rgba(16,185,129,.12)"><i class="fa-solid fa-sliders" style="color:#6ee7b7"></i></div>
+      <h3>কাস্টম লেবেল সেটিংস</h3>
+      <p>আপনার ব্যবসার ধরন অনুযায়ী সব লেবেল কাস্টমাইজ করুন — "রোগী", "পণ্য", "সার্ভিস" যা খুশি।</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ BIZ TYPE SHOWCASE ══ -->
+<section class="section" id="biz-types" style="padding-top:0">
+  <div class="rev">
+    <div class="s-tag">সব ব্যবসার জন্য</div>
+    <h2 class="s-title">আপনার ব্যবসা কোনটি?</h2>
+    <p class="s-sub">প্রিন্টিং প্রেস থেকে ফার্মেসি, রেস্টুরেন্ট থেকে কাপড়ের দোকান — স্মার্ট হিসাব সব ব্যবসায় মানানসই।</p>
+  </div>
+
+  <div class="showcase">
+    <div class="showcase-left rev">
+      <div class="biz-list" id="biz-list">
+
+        <div class="biz-row sel" data-biz="press" onclick="selectBiz(this)">
+          <div class="biz-ico" style="background:rgba(99,102,241,.15)"><i class="fa-solid fa-print" style="color:#a5b4fc"></i></div>
+          <div class="biz-info">
+            <h4>প্রিন্টিং প্রেস / ফ্লেক্স শপ</h4>
+            <p>ব্যানার, কার্ড, স্টিকার — সব ট্র্যাক করুন</p>
+          </div>
+          <i class="fa-solid fa-circle-check biz-check"></i>
+        </div>
+
+        <div class="biz-row" data-biz="pharmacy" onclick="selectBiz(this)">
+          <div class="biz-ico" style="background:rgba(16,185,129,.12)"><i class="fa-solid fa-pills" style="color:#6ee7b7"></i></div>
+          <div class="biz-info">
+            <h4>ফার্মেসি / ওষুধের দোকান</h4>
+            <p>ওষুধের স্টক, রোগীর ইতিহাস, মেয়াদ ট্র্যাক</p>
+          </div>
+          <i class="fa-solid fa-circle-check biz-check"></i>
+        </div>
+
+        <div class="biz-row" data-biz="electronics" onclick="selectBiz(this)">
+          <div class="biz-ico" style="background:rgba(14,165,233,.12)"><i class="fa-solid fa-mobile-screen" style="color:#7dd3fc"></i></div>
+          <div class="biz-info">
+            <h4>মোবাইল / ইলেকট্রনিক্স শপ</h4>
+            <p>পণ্য বিক্রি, সার্ভিসিং বিল, কমিশন ট্র্যাক</p>
+          </div>
+          <i class="fa-solid fa-circle-check biz-check"></i>
+        </div>
+
+        <div class="biz-row" data-biz="restaurant" onclick="selectBiz(this)">
+          <div class="biz-ico" style="background:rgba(249,115,22,.12)"><i class="fa-solid fa-utensils" style="color:#fdba74"></i></div>
+          <div class="biz-info">
+            <h4>রেস্টুরেন্ট / হোটেল</h4>
+            <p>অর্ডার, ক্যাশ ইন, কাঁচামাল স্টক ম্যানেজ</p>
+          </div>
+          <i class="fa-solid fa-circle-check biz-check"></i>
+        </div>
+
+        <div class="biz-row" data-biz="grocery" onclick="selectBiz(this)">
+          <div class="biz-ico" style="background:rgba(245,158,11,.12)"><i class="fa-solid fa-cart-shopping" style="color:#fde68a"></i></div>
+          <div class="biz-info">
+            <h4>মুদি / মনিহারি দোকান</h4>
+            <p>বাকি বিক্রি, স্টক লেভেল, দৈনিক হিসাব</p>
+          </div>
+          <i class="fa-solid fa-circle-check biz-check"></i>
+        </div>
+
+        <div class="biz-row" data-biz="salon" onclick="selectBiz(this)">
+          <div class="biz-ico" style="background:rgba(236,72,153,.12)"><i class="fa-solid fa-scissors" style="color:#f9a8d4"></i></div>
+          <div class="biz-info">
+            <h4>সেলুন / বিউটি পার্লার</h4>
+            <p>সেবার বিল, কাস্টমার ইতিহাস, রেফারেল</p>
+          </div>
+          <i class="fa-solid fa-circle-check biz-check"></i>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="showcase-right rev" style="transition-delay:.15s">
+      <div class="showcase-card" id="biz-preview">
+        <!-- Dynamic content injected by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section class="section" id="how" style="padding-top:0">
+  <div class="tc rev">
+    <div class="s-tag">শুরু করুন</div>
+    <h2 class="s-title">মাত্র <span class="grad">৩ ধাপে</span> শুরু</h2>
+    <p class="s-sub">নিবন্ধন থেকে ব্যবসা পরিচালনা — মাত্র কয়েক মিনিটের কাজ। কোনো টেকনিক্যাল জ্ঞান লাগবে না।</p>
+  </div>
+  <div class="steps-row">
+    <div class="step rev">
+      <div class="step-circle">১</div>
+      <h3>নিবন্ধন করুন</h3>
+      <p>ইমেইল দিয়ে অ্যাকাউন্ট খুলুন। ১৪ দিনের ফ্রি ট্রায়াল শুরু হবে — কোনো কার্ড লাগবে না।</p>
+    </div>
+    <div class="step rev" style="transition-delay:.1s">
+      <div class="step-circle">২</div>
+      <h3>ব্যবসার সেটআপ</h3>
+      <p>ব্যবসার ধরন বেছে নিন। লোগো, নাম ও কাস্টম লেবেল সেট করুন ৫ মিনিটে।</p>
+    </div>
+    <div class="step rev" style="transition-delay:.2s">
+      <div class="step-circle">৩</div>
+      <h3>পরিচালনা শুরু</h3>
+      <p>কাস্টমার যোগ করুন, হিসাব লিখুন, রিপোর্ট দেখুন। সব ডিভাইস থেকে একসাথে।</p>
+    </div>
+    <div class="step rev" style="transition-delay:.3s">
+      <div class="step-circle">৪</div>
+      <h3>বাড়তে থাকুন</h3>
+      <p>মাসিক রিপোর্ট বিশ্লেষণ করুন, বকেয়া কমান, ব্যবসার লাভ বাড়ান।</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRICING ══ -->
+<section class="section" id="pricing" style="padding-top:0">
+  <div class="tc rev">
+    <div class="s-tag">মূল্য পরিকল্পনা</div>
+    <h2 class="s-title">সাশ্রয়ী <span class="grad">সাবস্ক্রিপশন</span></h2>
+    <p class="s-sub">প্রতিটি টাকার বিনিময়ে পান একটি সম্পূর্ণ ব্যবসা ব্যবস্থাপনা সমাধান।</p>
+  </div>
+  <div class="pricing-wrap">
+
+    <div class="pc rev">
+      <div class="pc-plan">ফ্রি ট্রায়াল</div>
+      <div class="pc-price"><sup>৳</sup>0</div>
+      <div class="pc-period">১৪ দিনের জন্য</div>
+      <ul class="pc-list">
+        <li><i class="fa-solid fa-check"></i> সব ফিচার ব্যবহার করুন</li>
+        <li><i class="fa-solid fa-check"></i> ক্রেডিট কার্ড লাগবে না</li>
+        <li><i class="fa-solid fa-check"></i> সীমাহীন এন্ট্রি</li>
+        <li><i class="fa-solid fa-check"></i> ক্লাউড ব্যাকআপ সহ</li>
+        <li><i class="fa-solid fa-check"></i> যেকোনো ব্যবসার ধরন</li>
+      </ul>
+      <button class="pbtn pbtn-o" onclick="location.href='auth.html'">এখনই শুরু করুন →</button>
+    </div>
+
+    <div class="pc hot rev" style="transition-delay:.1s">
+      <div class="hot-badge">সবচেয়ে জনপ্রিয়</div>
+      <div class="pc-plan">Basic Plan</div>
+      <div class="pc-price"><sup>৳</sup>299</div>
+      <div class="pc-period">প্রতি মাসে · যেকোনো সময় বাতিল</div>
+      <ul class="pc-list">
+        <li><i class="fa-solid fa-check"></i> সীমাহীন আয়-ব্যয় এন্ট্রি</li>
+        <li><i class="fa-solid fa-check"></i> কাস্টমার ম্যানেজমেন্ট</li>
+        <li><i class="fa-solid fa-check"></i> স্টক ট্র্যাকিং</li>
+        <li><i class="fa-solid fa-check"></i> WhatsApp ইন্টিগ্রেশন</li>
+        <li><i class="fa-solid fa-check"></i> দৈনিক/মাসিক/বার্ষিক রিপোর্ট</li>
+        <li><i class="fa-solid fa-check"></i> কমিশন ট্র্যাকার</li>
+        <li><i class="fa-solid fa-check"></i> ডিজিটাল মেমো ও ইনভয়েস</li>
+        <li><i class="fa-solid fa-check"></i> ক্লাউড ব্যাকআপ ও অফলাইন</li>
+        <li><i class="fa-solid fa-check"></i> সব ধরনের ব্যবসার জন্য</li>
+      </ul>
+      <button class="pbtn pbtn-g" onclick="location.href='auth.html'">
+        <i class="fa-solid fa-crown"></i> সাবস্ক্রাইব করুন
+      </button>
+    </div>
+
+    <div class="pc yearly rev" style="transition-delay:.2s">
+      <div class="yearly-badge"><i class="fa-solid fa-bolt"></i> সর্বোচ্চ সাশ্রয়</div>
+      <div class="pc-plan">Yearly Plan</div>
+      <div class="pc-price"><sup>৳</sup>2,499</div>
+      <div class="pc-period">প্রতি বছর · মাসে মাত্র <strong style="color:#fff">৳২০৮</strong></div>
+      <div class="savings-row">
+        <i class="fa-solid fa-piggy-bank"></i>
+        বছরে <strong>৳১,০৮৯ সাশ্রয়</strong> — ৩ মাস ফ্রি!
+      </div>
+      <ul class="pc-list">
+        <li><i class="fa-solid fa-check"></i> Basic Plan-এর সব কিছু</li>
+        <li><i class="fa-solid fa-check"></i> সীমাহীন আয়-ব্যয় এন্ট্রি</li>
+        <li><i class="fa-solid fa-check"></i> কাস্টমার ম্যানেজমেন্ট</li>
+        <li><i class="fa-solid fa-check"></i> স্টক ট্র্যাকিং ও অ্যালার্ট</li>
+        <li><i class="fa-solid fa-check"></i> WhatsApp ইন্টিগ্রেশন</li>
+        <li><i class="fa-solid fa-check"></i> দৈনিক/মাসিক/বার্ষিক রিপোর্ট</li>
+        <li><i class="fa-solid fa-check"></i> কমিশন ট্র্যাকার</li>
+        <li><i class="fa-solid fa-check"></i> ডিজিটাল মেমো ও ইনভয়েস</li>
+        <li><i class="fa-solid fa-check"></i> ক্লাউড ব্যাকআপ ও অফলাইন</li>
+        <li><i class="fa-solid fa-star" style="color:#fbbf24"></i> প্রায়োরিটি সাপোর্ট</li>
+      </ul>
+      <button class="pbtn pbtn-y" onclick="location.href='auth.html'">
+        <i class="fa-solid fa-calendar-check"></i> বার্ষিক প্ল্যান নিন
+      </button>
+    </div>
+
+  </div>
+
+  <div class="pay-box rev" style="margin-top:28px">
+    <h4><i class="fa-brands fa-whatsapp" style="color:#25D366;margin-right:6px"></i> সহজ পেমেন্ট — bKash / Nagad</h4>
+    <p>
+      <strong style="color:#fff">bKash / Nagad:</strong> 01791-835232<br>
+      পেমেন্ট করার পরে <strong style="color:#25D366">WhatsApp করুন</strong> — ২৪ ঘণ্টার মধ্যে অ্যাক্টিভ
+    </p>
+    <a href="https://wa.me/8801791835232" target="_blank" class="wa-btn">
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp-এ কথা বলুন
+    </a>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="section" style="padding-top:0">
+  <div class="tc rev">
+    <div class="s-tag">ব্যবহারকারীদের কথা</div>
+    <h2 class="s-title">তারা কী বলছেন</h2>
+    <p class="s-sub">বিভিন্ন ধরনের ব্যবসা পরিচালনাকারীরা স্মার্ট হিসাব নিয়ে তাদের অভিজ্ঞতা জানিয়েছেন।</p>
+  </div>
+  <div class="testi-grid">
+
+    <div class="testi rev">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"আমার ফার্মেসিতে প্রতিদিন শত শত বিক্রি হয়। স্মার্ট হিসাব দিয়ে এখন সব হিসাব নিমিষেই পাই। ওষুধের স্টক কমলে অ্যালার্ট পাই — আর কখনো শেষ হয় না।"</p>
+      <div class="t-who">
+        <div class="t-av" style="background:linear-gradient(135deg,#10b981,#059669)">ড</div>
+        <div>
+          <div class="t-name">ডাঃ মোহাম্মদ আলী</div>
+          <div class="t-biz">আলী ফার্মেসি, ময়মনসিংহ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi rev" style="transition-delay:.09s">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"কাপড়ের ব্যবসায় বাকি বিক্রি অনেক হয়। এখন সব কাস্টমারের বাকির হিসাব এক জায়গায় দেখি। WhatsApp-এ মেসেজ পাঠালে অনেকেই দ্রুত দিয়ে দেয়।"</p>
+      <div class="t-who">
+        <div class="t-av" style="background:linear-gradient(135deg,#ec4899,#f97316)">স</div>
+        <div>
+          <div class="t-name">সুমাইয়া বেগম</div>
+          <div class="t-biz">সুমাইয়া বুটিক হাউস, নারায়ণগঞ্জ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi rev" style="transition-delay:.18s">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"রেস্টুরেন্টের দৈনিক হিসাব রাখা আগে অনেক ঝামেলা ছিল। এখন প্রতিদিন শেষে রিপোর্ট দেখি — কোন আইটেম বেশি বিক্রি হলো, লাভ কত হলো সব বুঝতে পারি।"</p>
+      <div class="t-who">
+        <div class="t-av" style="background:linear-gradient(135deg,#f97316,#eab308)">ক</div>
+        <div>
+          <div class="t-name">কবির হোসেন</div>
+          <div class="t-biz">মা কিচেন, সিলেট</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi rev" style="transition-delay:.27s">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"মোবাইলের দোকানে সার্ভিসিং চার্জ ট্র্যাক করা কঠিন ছিল। স্মার্ট হিসাব-এ প্রতিটি ফোনের আলাদা এন্ট্রি করি। কমিশন ট্র্যাকারটাও দারুণ কাজে লাগে।"</p>
+      <div class="t-who">
+        <div class="t-av" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)">র</div>
+        <div>
+          <div class="t-name">রাফি আহমেদ</div>
+          <div class="t-biz">রাফি মোবাইল সার্ভিস, রাজশাহী</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi rev" style="transition-delay:.36s">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"মুদি দোকানে এত ধরনের পণ্য — কোনটার স্টক কম সেটা মনে রাখা অসম্ভব। এখন Low Stock অ্যালার্ট পাই। বার্ষিক রিপোর্টে দেখি কোন মাসে বিক্রি বেশি।"</p>
+      <div class="t-who">
+        <div class="t-av" style="background:linear-gradient(135deg,#8b5cf6,#ec4899)">আ</div>
+        <div>
+          <div class="t-name">আনোয়ার হোসেন</div>
+          <div class="t-biz">আনোয়ার স্টোর, কুমিল্লা</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi rev" style="transition-delay:.45s">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-quote">"সেলুনের ব্যবসায় কাস্টম লেবেল দারুণ কাজ করছে — 'কাস্টমার' বদলে 'ক্লায়েন্ট' লিখেছি। প্রতিদিনের আয় রিপোর্ট দেখে পরিবারকে বুঝাতে পারি কতটুকু আয় হচ্ছে।"</p>
+      <div class="t-who">
+        <div class="t-av" style="background:linear-gradient(135deg,#10b981,#0ea5e9)">ন</div>
+        <div>
+          <div class="t-name">নাহিদ সুলতানা</div>
+          <div class="t-biz">গ্লো বিউটি পার্লার, চট্টগ্রাম</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<div class="cta-wrap">
+  <div class="cta-inner rev">
+    <div class="cta-icon-wrap">
+      <i class="fa-solid fa-rocket"></i>
+    </div>
+    <h2>আজই শুরু করুন — বিনামূল্যে</h2>
+    <p>১৪ দিনের ফ্রি ট্রায়ালে সব ফিচার ব্যবহার করুন। কোনো ক্রেডিট কার্ড লাগবে না। যেকোনো ব্যবসায় মানানসই।</p>
+    <div class="cta-btns">
+      <a href="auth.html" class="btn-main" style="font-size:16px;padding:17px 44px">
+        <i class="fa-solid fa-rocket"></i> বিনামূল্যে শুরু করুন
+      </a>
+      <a href="https://wa.me/8801791835232" target="_blank" class="btn-out" style="font-size:16px;padding:17px 32px">
+        <i class="fa-brands fa-whatsapp" style="color:#25D366"></i> WhatsApp করুন
+      </a>
+    </div>
+    <p class="cta-note">
+      <i class="fa-solid fa-shield-halved" style="color:var(--green);margin-right:5px"></i>
+      ১০০% নিরাপদ · যেকোনো সময় বাতিল করুন · কোনো লুকানো চার্জ নেই
+    </p>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a href="#" class="nav-logo">
+        <div class="logo-mark" style="width:30px;height:30px;font-size:13px"><i class="fa-solid fa-calculator"></i></div>
+        স্মার্ট হিসাব
+      </a>
+      <p>বাংলাদেশের যেকোনো ছোট-মাঝারি ব্যবসার জন্য সম্পূর্ণ বাংলা ভাষায় তৈরি ডিজিটাল হিসাব ব্যবস্থাপনা সফটওয়্যার।</p>
+    </div>
+    <div class="foot-col">
+      <h5>সফটওয়্যার</h5>
+      <a href="#features">সব ফিচার</a>
+      <a href="#biz-types">ব্যবসার ধরন</a>
+      <a href="#pricing">মূল্য পরিকল্পনা</a>
+      <a href="auth.html">ফ্রি ট্রায়াল</a>
+    </div>
+    <div class="foot-col">
+      <h5>সাপোর্ট</h5>
+      <a href="https://wa.me/8801791835232">WhatsApp সাপোর্ট</a>
+      <a href="#">ব্যবহার গাইড</a>
+      <a href="#">পেমেন্ট পদ্ধতি</a>
+      <a href="#">আপডেট লগ</a>
+    </div>
+    <div class="foot-col">
+      <h5>কোম্পানি</h5>
+      <a href="#">আমাদের সম্পর্কে</a>
+      <a href="#">গোপনীয়তা নীতি</a>
+      <a href="#">সেবার শর্তাবলী</a>
+      <a href="#">যোগাযোগ করুন</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© ২০২৫ স্মার্ট হিসাব · সর্বস্বত্ব সংরক্ষিত</span>
+    <div class="socials">
+      <a href="#" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://wa.me/8801791835232" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="#" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <div style="width:6px;height:6px;border-radius:50%;background:var(--green);animation:ldot 1.5s infinite"></div>
+      সব সিস্টেম সচল
+    </div>
+  </div>
+</footer>
+
+<!-- Floating CTA -->
+<div class="float-cta" id="fcta">
+  <span><i class="fa-solid fa-gift" style="color:#a5b4fc;margin-right:4px"></i> <strong>১৪ দিন ফ্রি</strong> — কোনো ক্রেডিট কার্ড লাগবে না</span>
+  <button class="ft-btn" onclick="location.href='auth.html'">এখনই শুরু →</button>
+  <button class="ft-x" onclick="document.getElementById('fcta').style.display='none'">✕</button>
+</div>
+
+<script>
+/* ── Nav toggle ── */
+function toggleNav(){
+  var m=document.getElementById('mob-menu'),i=document.getElementById('h-ico');
+  var open=m.style.display!=='none';
+  m.style.display=open?'none':'block';
+  i.className=open?'fa-solid fa-bars':'fa-solid fa-xmark';
+}
+function closeNav(){
+  document.getElementById('mob-menu').style.display='none';
+  document.getElementById('h-ico').className='fa-solid fa-bars';
+}
+
+/* ── Scroll nav ── */
+window.addEventListener('scroll',function(){
+  document.getElementById('nav').style.background=
+    scrollY>60?'rgba(9,9,15,.97)':'rgba(9,9,15,.8)';
+});
+
+/* ── Scroll reveal ── */
+var obs=new IntersectionObserver(function(ents){
+  ents.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in')});
+},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rev').forEach(function(el){obs.observe(el)});
+
+/* ── Biz chip hover interaction ── */
+var chips=document.querySelectorAll('.biz-chip');
+chips.forEach(function(c,i){
+  c.style.animationDelay=(i*0.05)+'s';
+  c.addEventListener('click',function(){
+    chips.forEach(function(x){x.classList.remove('active')});
+    c.classList.add('active');
+  });
+});
+
+/* ── Business type showcase ── */
+var BIZ={
+  press:{
+    iconHtml:'<i class="fa-solid fa-print" style="color:#a5b4fc"></i>',
+    color:'rgba(99,102,241,.2)',name:'প্রিন্টিং প্রেস',
+    lbl1:'আয়ের লেবেল',lbl1v:'বিল',lbl2:'কাজের ধরন',lbl2v:'ব্যানার/কার্ড/স্টিকার',
+    lbl3:'কাস্টমার লেবেল',lbl3v:'কাস্টমার',lbl4:'স্টক আইটেম',lbl4v:'কাগজ/কালি/ফ্লেক্স',
+    entries:[
+      {name:'রহিম ট্রেডার্স',work:'ব্যানার ×৫০',amt:'৳৩,৫০০',status:'Paid',sc:'#10b981'},
+      {name:'আল-আমিন প্রিন্ট',work:'লেটারহেড ×৫০০',amt:'৳৮,০০০',status:'Partial',sc:'#f59e0b'},
+      {name:'ঢাকা ইন্টারন্যাশনাল',work:'ভিজিটিং কার্ড ×১০০০',amt:'৳৩,০০০',status:'Due',sc:'#ef4444'},
+    ]
+  },
+  pharmacy:{
+    iconHtml:'<i class="fa-solid fa-pills" style="color:#6ee7b7"></i>',
+    color:'rgba(16,185,129,.15)',name:'ফার্মেসি',
+    lbl1:'আয়ের লেবেল',lbl1v:'বিক্রয়',lbl2:'পণ্যের ধরন',lbl2v:'ওষুধ/সাপ্লিমেন্ট',
+    lbl3:'কাস্টমার লেবেল',lbl3v:'রোগী/ক্রেতা',lbl4:'স্টক আইটেম',lbl4v:'ওষুধ/পণ্য',
+    entries:[
+      {name:'রফিক সাহেব',work:'Napa × ১০ + Antacid',amt:'৳৩৫০',status:'Paid',sc:'#10b981'},
+      {name:'সালমা বেগম',work:'Insulin + Vitamins',amt:'৳১,২০০',status:'Paid',sc:'#10b981'},
+      {name:'করিম মিয়া',work:'Antibiotic Course',amt:'৳৮৫০',status:'Due',sc:'#ef4444'},
+    ]
+  },
+  electronics:{
+    iconHtml:'<i class="fa-solid fa-mobile-screen" style="color:#7dd3fc"></i>',
+    color:'rgba(14,165,233,.15)',name:'ইলেকট্রনিক্স শপ',
+    lbl1:'আয়ের লেবেল',lbl1v:'বিক্রয়',lbl2:'পণ্যের ধরন',lbl2v:'মোবাইল/অ্যাকসেসরিজ',
+    lbl3:'কাস্টমার লেবেল',lbl3v:'কাস্টমার',lbl4:'স্টক আইটেম',lbl4v:'পণ্য/যন্ত্রাংশ',
+    entries:[
+      {name:'তানভীর আহমেদ',work:'Samsung A55 + কভার',amt:'৳৩৬,৫০০',status:'Paid',sc:'#10b981'},
+      {name:'নাদিয়া ইসলাম',work:'iPhone 13 সার্ভিসিং',amt:'৳৩,৫০০',status:'Partial',sc:'#f59e0b'},
+      {name:'রাসেল মাহমুদ',work:'Earbuds × ৫ পিস',amt:'৳৭,৫০০',status:'Paid',sc:'#10b981'},
+    ]
+  },
+  restaurant:{
+    iconHtml:'<i class="fa-solid fa-utensils" style="color:#fdba74"></i>',
+    color:'rgba(249,115,22,.15)',name:'রেস্টুরেন্ট',
+    lbl1:'আয়ের লেবেল',lbl1v:'বিক্রয়',lbl2:'পণ্যের ধরন',lbl2v:'অর্ডার/আইটেম',
+    lbl3:'কাস্টমার লেবেল',lbl3v:'কাস্টমার',lbl4:'স্টক আইটেম',lbl4v:'কাঁচামাল',
+    entries:[
+      {name:'দৈনিক ক্যাশ',work:'ভাত + তরকারি + চা',amt:'৳১২,৫০০',status:'Paid',sc:'#10b981'},
+      {name:'ABC অফিস',work:'লাঞ্চ প্যাকেজ × ২০',amt:'৳৬,০০০',status:'Partial',sc:'#f59e0b'},
+      {name:'XYZ কর্পোরেট',work:'ইফতার প্যাকেজ × ৫০',amt:'৳২৫,০০০',status:'Due',sc:'#ef4444'},
+    ]
+  },
+  grocery:{
+    iconHtml:'<i class="fa-solid fa-cart-shopping" style="color:#fde68a"></i>',
+    color:'rgba(245,158,11,.15)',name:'মুদির দোকান',
+    lbl1:'আয়ের লেবেল',lbl1v:'বিক্রয়',lbl2:'পণ্যের ধরন',lbl2v:'মুদিমাল/পণ্য',
+    lbl3:'কাস্টমার লেবেল',lbl3v:'ক্রেতা',lbl4:'স্টক আইটেম',lbl4v:'পণ্য/মাল',
+    entries:[
+      {name:'হাজী বাড়ি',work:'চাল ৫ কেজি + ডাল + তেল',amt:'৳৮৫০',status:'Paid',sc:'#10b981'},
+      {name:'মাতুব্বর পরিবার',work:'মাসিক বাজার',amt:'৳৩,২০০',status:'Due',sc:'#ef4444'},
+      {name:'গ্রাম মুদি',work:'পাইকারি চাল ১ বস্তা',amt:'৳২,৮০০',status:'Paid',sc:'#10b981'},
+    ]
+  },
+  salon:{
+    iconHtml:'<i class="fa-solid fa-scissors" style="color:#f9a8d4"></i>',
+    color:'rgba(236,72,153,.15)',name:'সেলুন / পার্লার',
+    lbl1:'আয়ের লেবেল',lbl1v:'আয়',lbl2:'সেবার ধরন',lbl2v:'হেয়ারকাট/ফেসিয়াল',
+    lbl3:'কাস্টমার লেবেল',lbl3v:'ক্লায়েন্ট',lbl4:'স্টক আইটেম',lbl4v:'পণ্য/উপকরণ',
+    entries:[
+      {name:'শাহেদা বেগম',work:'ব্রাইডাল মেকআপ',amt:'৳৮,০০০',status:'Paid',sc:'#10b981'},
+      {name:'রিয়া আক্তার',work:'হেয়ার কালার + কাট',amt:'৳২,৫০০',status:'Paid',sc:'#10b981'},
+      {name:'ফাতেমা খানম',work:'ফেসিয়াল + মেহেদি',amt:'৳১,৮০০',status:'Partial',sc:'#f59e0b'},
+    ]
+  }
+};
+
+function selectBiz(row){
+  document.querySelectorAll('.biz-row').forEach(function(r){r.classList.remove('sel')});
+  row.classList.add('sel');
+  renderPreview(row.dataset.biz);
+}
+
+function renderPreview(key){
+  var b=BIZ[key]||BIZ.press;
+  var card=document.getElementById('biz-preview');
+  var entryHtml=b.entries.map(function(e){
+    return '<div class="sc-entry">'
+      +'<div class="sc-entry-dot" style="background:'+e.sc+'"></div>'
+      +'<div style="flex:1"><strong>'+e.name+'</strong> &mdash; '+e.work+'</div>'
+      +'<div style="font-weight:700;color:'+e.sc+';font-size:11px">'+e.status+'</div>'
+      +'<div style="font-weight:800;font-size:12px;margin-left:8px;color:#fff">'+e.amt+'</div>'
+      +'</div>';
+  }).join('');
+
+  card.style.borderColor='rgba(99,102,241,.5)';
+  card.innerHTML=
+    '<div class="sc-header">'
+      +'<div class="sc-logo" style="background:'+b.color+'">'+b.iconHtml+'</div>'
+      +'<div>'
+        +'<div style="font-weight:800;font-size:16px;color:#fff">'+b.name+'</div>'
+        +'<div style="font-size:12px;color:var(--muted)">কাস্টমাইজড লেবেল সহ</div>'
+      +'</div>'
+    +'</div>'
+    +'<div class="sc-stats-mini">'
+      +'<div class="sc-stat"><div class="sc-stat-val" style="color:#a5b4fc">'+b.lbl1v+'</div><div class="sc-stat-lbl">'+b.lbl1+'</div></div>'
+      +'<div class="sc-stat"><div class="sc-stat-val" style="color:#6ee7b7">'+b.lbl3v+'</div><div class="sc-stat-lbl">'+b.lbl3+'</div></div>'
+      +'<div class="sc-stat"><div class="sc-stat-val" style="color:#fde68a">'+b.lbl4v+'</div><div class="sc-stat-lbl">'+b.lbl4+'</div></div>'
+    +'</div>'
+    +'<div style="font-size:11px;color:var(--muted);margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:.5px">সাম্প্রতিক লেনদেন</div>'
+    +'<div class="sc-entries">'+entryHtml+'</div>';
+}
+
+// init
+renderPreview('press');
+
+/* ── Smooth anchor ── */
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
+  })
+});
+
+/* ── Orb parallax ── */
+window.addEventListener('mousemove',function(e){
+  var x=(e.clientX/innerWidth-.5)*18,y=(e.clientY/innerHeight-.5)*18;
+  document.querySelectorAll('.orb').forEach(function(o,i){
+    var f=(i+1)*.6;
+    o.style.transform='translate('+x*f+'px,'+y*f+'px)';
+  });
+});
+
+/* ── Auto hide float banner ── */
+setTimeout(function(){
+  var b=document.getElementById('fcta');
+  if(b){b.style.opacity='0';b.style.transition='opacity .5s';setTimeout(function(){b.style.display='none'},500)}
+},12000);
+</script>
+</body>
+</html>

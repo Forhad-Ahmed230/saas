@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Admin emails
+    function isAdmin() {
+      return request.auth != null && 
+             request.auth.token.email in [
+               'habibak2024@gmail.com',
+               'shapla.it@gmail.com'
+             ];
+    }
+
+    // প্রতিটি tenant নিজের data পড়তে/লিখতে পারবে
+    // Admin যেকোনো tenant-এর data access করতে পারবে
+    match /tenants/{userId}/{document=**} {
+      allow read, write: if request.auth != null && 
+                           (request.auth.uid == userId || isAdmin());
+    }
+
+    // tenants_registry — সবাই পড়তে পারবে, Admin ও নিজে লিখতে পারবে
+    match /tenants_registry/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+                     (request.auth.uid == userId || isAdmin());
+    }
+
+    // admin_config — শুধু Admin
+    match /admin_config/{doc} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
